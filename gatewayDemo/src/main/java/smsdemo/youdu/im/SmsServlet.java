@@ -56,7 +56,13 @@ public class SmsServlet extends HttpServlet {
             String encryptMsg = ((EncryptBody) inputData).getEncrypt();
             //解密收到的数据
             SmsBody body = crypto.decrypt(encryptMsg);
-            System.out.println("获取到的body是:"+body);
+            System.out.println("获取到的body是:" + body);
+
+
+            //TODO:在这里将短信发给短信平台
+            //crypto.fromUser() 发送者
+            //body.getMobileList(); 接收者
+            //body.getContent(); 短信内容
 
             //加密
             String respond = createRespond(body);
@@ -70,13 +76,16 @@ public class SmsServlet extends HttpServlet {
             out.close();
             response.flushBuffer();
 
-            //给消息发送者发送一条发送成功的短信消息
-            if (crypto.size!=0)appClient.sendSmsMsg(crypto.fromUser,"","测试账号","testSms:成功");
+            //TODO:模拟发一条上行短信
+            //if (crypto.size != 0) {
+            //    appClient.sendSmsMsg(crypto.fromUser,"","131123060000","来自手机的短信");
+            //}
         } catch (IOException e) {
             System.out.println(e);
-        } catch (GeneralEntAppException e) {
-            System.out.println(e);
         }
+        //} catch (GeneralEntAppException e) {
+        //    System.out.println(e);
+        //}
 
     }
 
